@@ -1,0 +1,56 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.2.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+	id 'war'
+}
+
+apply plugin: 'groovy'
+
+group = 'ania.miklash.pjatk'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+bootRun.dependsOn(test)
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.projectlombok:lombok'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
+	/* TOOLS */
+	compile group: 'com.google.guava', name: 'guava', version: '29.0-jre'
+
+	/* LOGGER */
+	compile 'ch.qos.logback:logback-classic:1.2.3'
+
+	/* TEST */
+	compile "org.codehaus.groovy:groovy-all:2.5.8"
+	testCompile platform("org.spockframework:spock-bom:2.0-M1-groovy-2.5")
+	testCompile "org.spockframework:spock-core"
+	testCompile "org.spockframework:spock-junit4" // you can remove this if your code does not rely on old JUnit 4 rules
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+}
