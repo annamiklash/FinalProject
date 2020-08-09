@@ -1,14 +1,19 @@
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <root level="info">
+    <root level="debug">
     </root>
 
-    <logger name="ania.miklash.pjatk" level="debug">
-        <appender-ref ref="STDOUT" />
+    <logger name="org.zalando.logbook.Logbook" level="trace" additivity="false">
+        <appender-ref ref="STDOUT"/>
     </logger>
+
+    <logger name="ania.miklash.pjatk" level="debug">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
 </configuration>

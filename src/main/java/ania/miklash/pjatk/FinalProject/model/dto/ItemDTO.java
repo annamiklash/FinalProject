@@ -1,41 +1,37 @@
 package ania.miklash.pjatk.FinalProject.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name = "customer")
-public class CustomerDTO implements Serializable {
+@Entity(name = "item")
+public class ItemDTO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    private String firstName;
+    private String name;
     @NotNull
-    private String lastName;
+    private String description;
     @NotNull
-    private String phoneNumber;
-    @NotNull
-    private String email;
-    @NotNull
-    private String hashedPassword;
-    @Nullable
-    private LocalDate birthDate;
+    private BigDecimal price;
 
-    @OneToMany(mappedBy = "customer")
-    private List<ReservationDTO> reservation;
+    @JsonIgnore
+    @ManyToMany
+    @JoinColumn(foreignKey = @ForeignKey(name = "FK_ITEM_MENU"))
+    private List<MenuDTO> menu;
 }

@@ -8,6 +8,11 @@ spring:
     username: postgres
     password: postgres
 
+logbook:
+  filter.enabled: true
+  format.style: http
+  write:
+    max-body-size: 1000
 
 final:
   project:
